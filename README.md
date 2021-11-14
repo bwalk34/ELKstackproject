@@ -7,49 +7,65 @@ The files in this repository were used to configure the network depicted below.
 
 ![TODO: Update the path with the name of your diagram](Images/diagram_filename.png)
 
-These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the _____ file may be used to install only certain pieces of it, such as Filebeat.
+These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the Ansible file may be used to install only certain pieces of it, such as Filebeat.
 
-  - _TODO: Enter the playbook file._
+/etc/ansible/install-elk.yml
 
 This document contains the following details:
-- Description of the Topologu
+- Description of the Topology
 - Access Policies
 - ELK Configuration
   - Beats in Use
   - Machines Being Monitored
 - How to Use the Ansible Build
 
-
 ### Description of the Topology
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
-Load balancing ensures that the application will be highly _____, in addition to restricting _____ to the network.
-- _TODO: What aspect of security do load balancers protect? What is the advantage of a jump box?_
+Load balancing ensures that the application will be highly available, in addition to restricting traffic to the network.
 
-Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the _____ and system _____.
-- _TODO: What does Filebeat watch for?_
-- _TODO: What does Metricbeat record?_
+What aspect of security do load balancers protect?
 
-The configuration details of each machine may be found below.
-_Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
+Load balancing protects the Availability aspect in the CIA Triad model-- it improves the performance and availability of applications, websites, databases, and other computing resources within a network. A load balancer can also detect and drop distributed denial-of-service (DDoS) traffic before it enters the network by redirecting attack traffic. It can further protect against unauthorized access by requesting a username and password before allowing access into the network. 
 
-| Name     | Function | IP Address | Operating System |
-|----------|----------|------------|------------------|
-| Jump Box | Gateway  | 10.0.0.1   | Linux            |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
+What is the advantage of a jump box?
+
+The advantage of a jump box is to allow access to a user from a single node that can be secured/hardened and monitored. It usually resides in a DMZ (demilitarized zone) or another network that can be accessed via the Internet.
+
+Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the logs and system traffic.
+
+What does Filebeat watch for?
+
+Filebeat monitors log files or locations that you specify, collects log events, and forwards them either to Elasticsearch or Logstash for indexing.
+
+What does Metricbeat record?
+
+Metricbeat takes the metrics and statistics that it collects and ships them to the output that is specified, such as Elasticsearch or Logstash.
+
+The configuration details of each machine may be found below:
+
+| Name     	| Function   	| IP Address 	| Operating System 	|
+|----------	|------------	|------------	|------------------	|
+| Jump Box 	| Gateway    	| 10.0.0.5   	| Linux            	|
+| Web1     	| Web Server 	| 10.0.0.6   	| Linux            	|
+| Web2     	| Web Server 	| 10.0.0.7   	| Linux            	|
+| Web3     	| Web Server 	| 10.0.0.4   	| Linux            	|
+| ELK      	| ELK Server 	| 10.1.0.4   	| Linux            	|
 
 ### Access Policies
 
 The machines on the internal network are not exposed to the public Internet. 
 
-Only the _____ machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- _TODO: Add whitelisted IP addresses_
+Only the Jump Box machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
 
-Machines within the network can only be accessed by _____.
-- _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
+20.80.179.66
+
+Machines within the network can only be accessed by SSH.
+
+Which machine did you allow to access your ELK VM? What was its IP address?
+
+Jump Box Machine. 10.0.0.5
 
 A summary of the access policies in place can be found in the table below.
 
