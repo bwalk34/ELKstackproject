@@ -1,5 +1,4 @@
 # ELKstackproject
-Project 1
 
 ## Automated ELK Stack Deployment
 
@@ -48,24 +47,24 @@ The configuration details of each machine may be found below:
 | Name     	| Function   	| IP Address 	| Operating System 	|
 |----------	|------------	|------------	|------------------	|
 | Jump Box 	| Gateway    	| 10.0.0.5   	| Linux            	|
-| Web1     	| Web Server 	| 10.0.0.6   	| Linux            	|
-| Web2     	| Web Server 	| 10.0.0.7   	| Linux            	|
-| Web3     	| Web Server 	| 10.0.0.4   	| Linux            	|
+| Web-1     | Web Server 	| 10.0.0.6   	| Linux            	|
+| Web-2     | Web Server 	| 10.0.0.7   	| Linux            	|
+| Web-3     | Web Server 	| 10.0.0.4   	| Linux            	|
 | ELK      	| ELK Server 	| 10.1.0.4   	| Linux            	|
 
 ### Access Policies
 
 The machines on the internal network are not exposed to the public Internet. 
 
-Only the Jump Box machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
+Only the jump box machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
 
 Add whitelisted IP addresses:
 
-My Local Machine's Public IP Address
+My Local Machine's Public IP Address...
 
 Machines within the network can only be accessed by SSH (Port 22) and HTTP (Port 80).
 
-Which machine did you allow to access your ELK VM? Jump Box machine
+Which machine did you allow to access your ELK VM? Jump box machine
 
 What was its IP address? 10.0.0.5
 
@@ -74,20 +73,24 @@ A summary of the access policies in place can be found in the table below.
 | Name     	| Publicly Accessible? (Y/N)              	| Allowed IP Addresses                 	|
 |----------	|-----------------------------------------	|--------------------------------------	|
 | Jump Box 	| Y (SSH Port:22)                         	| My Local Machine's Public IP Address 	|
-| Web1     	| N                                       	| 20.80.179.66                         	|
-| Web2     	| N                                       	| 20.80.179.66                         	|
-| Web3     	| N                                       	| 20.80.179.66                         	|
+| Web-1    	| N                                       	| 20.80.179.66                         	|
+| Web-2    	| N                                       	| 20.80.179.66                         	|
+| Web-3    	| N                                       	| 20.80.179.66                         	|
 | ELK      	| Y (Kibana Port:5601 and HTTP Port:9200) 	| 10.1.0.4                             	|
 
 ### Elk Configuration
 
-Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-Ansible models your IT infrastructure by describing how all of your systems inter-relate, rather than just managing one system at a time. 
+Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because it minimizes the potential for error and increases the potential to save time. Roles were used to increase utility and functionality. The setup includes the initial alpha.yml file that references each playbook's install files titled alpha.yml. This main file saves time and effort because it can dictate which playbooks are in use; streamlining any future edits of the machines.
 
 The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
-- ...
-- ...
+- Configures the target VM (the machine being configured) to use more memory
+  command: sysctl -w vm.max_map_count=262144 
+- Installs docker.io 
+- Installs python3-pip 
+- Installs the docker module using pip 
+- Downloads and launches the sebp/elk container over ports 5601, 9200, and 5044
+- Enable docker service
+
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
@@ -96,31 +99,46 @@ The following screenshot displays the result of running `docker ps` after succes
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
 
-Web1 (10.0.0.6)
-Web2 (10.0.0.7)
-Web3 (10.0.0.4)
+Web-1 | 10.0.0.6
+Web-2 | 10.0.0.7
+Web-3 | 10.0.0.4
 
 We have installed the following Beats on these machines:
 
 Filebeat and Metricbeat
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
 
-Filebeat: log events,  
-Metricbeat: system metrics and statistics, 
+Filebeat collects and ships log files, such as Apache web server logs. 
+Metricbeat collects and reports system-level metrics for various systems and platforms, such as uptime.
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the install-elk.yml file to _____.
-- Update the hosts file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
+- Copy the playbook/configuration (.yml) file to the ansible directory.
+- Update the hosts file to include the IP addresses of the web servers and ELK server.
+- Run the playbook, and navigate to Kibana to check that the installation worked as expected.
 
-_TODO: Answer the following questions to fill in the blanks:_
-- _Which file is the playbook? Where do you copy it?_
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-- _Which URL do you navigate to in order to check that the ELK server is running?
+Which file is the playbook? 
 
-_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
+filebeat-playbook.yml and metricbeat-playbook.yml
+
+Where do you copy it?
+
+/etc/ansible/files/
+
+Which file do you update to make Ansible run the playbook on a specific machine? 
+
+The configuration file, such as: filebeat-config.yml and metricbeat-config.yml
+
+How do I specify which machine to install the ELK server on versus which to install Filebeat on?
+
+Update the /etc/ansible/hosts file to include the IPs of the ELK server and the webservers.
+
+Which URL do you navigate to in order to check that the ELK server is running?
+
+http://<ELK.VM.External.IP>:5601/app/kibana
+
+
+
