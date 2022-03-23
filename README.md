@@ -58,11 +58,9 @@ The machines on the internal network are not exposed to the public Internet.
 
 Only the jump box machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
 
-Add whitelisted IP addresses:
+My Local Machine's Public IP Address
 
-My Local Machine's Public IP Address...
-
-Machines within the network can only be accessed by SSH (Port 22) and HTTP (Port 80).
+Machines within the network can only be accessed by SSH (Port 22) and HTTP (Port 80)
 
 Which machine did you allow to access your ELK VM? Jump box machine
 
