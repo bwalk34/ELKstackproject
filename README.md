@@ -22,23 +22,13 @@ This document contains the following details:
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
-Load balancing ensures that the application will be highly available, in addition to restricting traffic to the network.
-
-What aspect of security do load balancers protect?
-
-Load balancing protects the Availability aspect in the CIA Triad model-- it improves the performance and availability of applications, websites, databases, and other computing resources within a network. A load balancer can also detect and drop distributed denial-of-service (DDoS) traffic before it enters the network by redirecting attack traffic. It can further protect against unauthorized access by requesting a username and password before allowing access into the network. 
-
-What is the advantage of a jump box?
+Load balancing ensures that the application will be highly available, in addition to restricting traffic to the network. Furthermore, load balancing protects the Availability aspect of the CIA Triad model-- it improves the performance and availability of applications, websites, databases, and other computing resources within a network. A load balancer can also detect and drop distributed denial-of-service (DDoS) traffic before it enters the network by redirecting attack traffic. It can further protect against unauthorized access by requesting a username and password before allowing access into the network. 
 
 The advantage of a jump box is to allow access to a user from a single node that can be secured/hardened and monitored. It usually resides in a DMZ (demilitarized zone) or another network that can be accessed via the Internet.
 
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the logs and system traffic.
 
-What does Filebeat watch for?
-
 Filebeat monitors log files or locations that you specify, collects log events, and forwards them either to Elasticsearch or Logstash for indexing.
-
-What does Metricbeat record?
 
 Metricbeat takes the metrics and statistics that it collects and ships them to the output that is specified, such as Elasticsearch or Logstash.
 
@@ -62,9 +52,9 @@ My Local Machine's Public IP Address
 
 Machines within the network can only be accessed by SSH (Port 22) and HTTP (Port 80)
 
-Which machine did you allow to access your ELK VM? Jump box machine
+I allowed the jump box machine to access the ELK VM.
 
-What was its IP address? 10.0.0.5
+IP address is 10.0.0.5
 
 A summary of the access policies in place can be found in the table below.
 
@@ -118,23 +108,19 @@ SSH into the control node and follow the steps below:
 - Update the hosts file to include the IP addresses of the web servers and ELK server.
 - Run the playbook, and navigate to Kibana to check that the installation worked as expected.
 
-Which file is the playbook? 
+filebeat-playbook.yml and metricbeat-playbook.yml are the playbooks
 
-filebeat-playbook.yml and metricbeat-playbook.yml
-
-Where do you copy it?
+I copied the playbooks to: 
 
 /etc/ansible/files/
 
-Which file do you update to make Ansible run the playbook on a specific machine? 
+Update the configuration file, such as: filebeat-config.yml and metricbeat-config.yml to make Ansible run the desired playbook on a machine.
 
-The configuration file, such as: filebeat-config.yml and metricbeat-config.yml
+In order to specify which machine to install the ELK server on versus which to install Filebeat on:
 
-How do I specify which machine to install the ELK server on versus which to install Filebeat on?
+Update the /etc/ansible/hosts file to include the IPs of the ELK server and the webservers. 
 
-Update the /etc/ansible/hosts file to include the IPs of the ELK server and the webservers.
-
-Which URL do you navigate to in order to check that the ELK server is running?
+Use the following URL to check that the ELK server is running:
 
 http://<ELK.VM.External.IP>:5601/app/kibana
 
